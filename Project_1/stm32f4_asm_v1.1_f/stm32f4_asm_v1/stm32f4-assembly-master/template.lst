@@ -1,0 +1,560 @@
+
+template.elf:     file format elf32-littlearm
+template.elf
+architecture: arm, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x08000000
+
+Program Header:
+    LOAD off    0x00010000 vaddr 0x08000000 paddr 0x08000000 align 2**16
+         filesz 0x000001b0 memsz 0x000001b0 flags r-x
+    LOAD off    0x00020000 vaddr 0x20000000 paddr 0x080001b0 align 2**16
+         filesz 0x00000000 memsz 0x00000000 flags rw-
+private flags = 5000200: [Version5 EABI] [soft-float ABI]
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000001b0  08000000  08000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  20000000  080001b0  00020000  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  20000000  080001b0  00020000  2**0
+                  ALLOC
+  3 .ARM.attributes 00000021  00000000  00000000  00020000  2**0
+                  CONTENTS, READONLY
+  4 .debug_line   000000d8  00000000  00000000  00020021  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000026  00000000  00000000  000200f9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000014  00000000  00000000  0002011f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_aranges 00000020  00000000  00000000  00020138  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    00000088  00000000  00000000  00020158  2**0
+                  CONTENTS, READONLY, DEBUGGING
+SYMBOL TABLE:
+08000000 l    d  .text	00000000 .text
+20000000 l    d  .data	00000000 .data
+20000000 l    d  .bss	00000000 .bss
+00000000 l    d  .ARM.attributes	00000000 .ARM.attributes
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000000 l    d  .debug_str	00000000 .debug_str
+00000000 l    df *ABS*	00000000 template.o
+001e8480 l       *ABS*	00000000 LEDDELAY
+0000186a l       *ABS*	00000000 BITDELAY
+00000049 l       *ABS*	00000000 RC_start
+00000100 l       *ABS*	00000000 mod_num
+01000000 l       *ABS*	00000000 identifier
+00070000 l       *ABS*	00000000 source_adr
+00000a00 l       *ABS*	00000000 dest_adr
+000000c9 l       *ABS*	00000000 Encrypt_Key
+40023830 l       *ABS*	00000000 RCC_AHB1ENR
+40020c00 l       *ABS*	00000000 GPIOD_MODER
+40020c14 l       *ABS*	00000000 GPIOD_ODR
+40020000 l       *ABS*	00000000 GPIOA_MODER
+40020010 l       *ABS*	00000000 GPIOA_IDR
+40020400 l       *ABS*	00000000 GPIOB_MODER
+40020414 l       *ABS*	00000000 GPIOB_ODR
+08000008 l       .text	00000000 _start
+0800003c l       .text	00000000 X0
+08000048 l       .text	00000000 DELAY1
+0800004e l       .text	00000000 Y0
+08000056 l       .text	00000000 DELAY2
+0800005c l       .text	00000000 Prep
+0800007c l       .text	00000000 Button
+08000090 l       .text	00000000 Rolling_Code
+080000b0 l       .text	00000000 X
+080000bc l       .text	00000000 DELAY3
+080000c2 l       .text	00000000 Y
+080000ca l       .text	00000000 DELAY4
+080000d0 l       .text	00000000 RC_LED
+080000e4 l       .text	00000000 X1
+080000f0 l       .text	00000000 DELAY5
+080000f6 l       .text	00000000 Y1
+080000fe l       .text	00000000 Encrypt
+08000110 l       .text	00000000 ME_Bit_Seperator
+0800018c l       .text	00000000 Fin
+0800011e l       .text	00000000 ME_one
+08000154 l       .text	00000000 ME_zero
+08000130 l       .text	00000000 DELAY6
+08000136 l       .text	00000000 ME_one_2
+0800014e l       .text	00000000 DELAY7
+0800018a l       .text	00000000 Bridge
+08000166 l       .text	00000000 DELAY8
+0800016c l       .text	00000000 ME_zero_2
+08000184 l       .text	00000000 DELAY9
+00000000 g       *ABS*	00000000 __data_size
+20000000 g       .data	00000000 __data_start__
+080001b0 g       .text	00000000 _sidata
+080001b0 g       .text	00000000 __etext
+00000000 g       *ABS*	00000000 __bss_size
+20000000 g       .bss	00000000 __bss_start__
+20000000 g       .data	00000000 __data_end__
+20000000 g       .bss	00000000 __bss_end__
+20020000 g       .bss	00000000 __StackTop
+000001b0 g       *ABS*	00000000 __text_size
+
+
+
+Disassembly of section .text:
+
+08000000 <_start-0x8>:
+ 8000000:	20020000 	.word	0x20020000
+ 8000004:	08000009 	.word	0x08000009
+
+08000008 <_start>:
+// Main code starts from here
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+_start:
+	// Enable GPIOA GPIOB & GPIOD Peripheral Clock (bit 0, 1 & 3 in AHB1ENR register)
+	ldr r6, = RCC_AHB1ENR       // Load peripheral clock reg address to r6
+ 8000008:	4e61      	ldr	r6, [pc, #388]	; (8000190 <Fin+0x4>)
+	ldr r5, [r6]                // Read its content to r5
+ 800000a:	6835      	ldr	r5, [r6, #0]
+	orr r5, 0x0000000B          // Set bit 0,1 & 3 to enable GPIOA GPIOB & GPIOD clock
+ 800000c:	f045 050b 	orr.w	r5, r5, #11
+	str r5, [r6]                // Store result in peripheral clock register
+ 8000010:	6035      	str	r5, [r6, #0]
+
+	// Make GPIOD Pin 0,12,13,14,15 as output pin
+	ldr r6, = GPIOD_MODER       // Load GPIOD MODER register address to r6
+ 8000012:	4e60      	ldr	r6, [pc, #384]	; (8000194 <Fin+0x8>)
+	ldr r5, [r6]                // Read its content to r5
+ 8000014:	6835      	ldr	r5, [r6, #0]
+	and r5, 0x00FFFFFF          // Clear bits 24, 31 for P12,13,14,15
+ 8000016:	f025 457f 	bic.w	r5, r5, #4278190080	; 0xff000000
+	orr r5, 0x55000000          // Write 01 to bits 24-31 for P12
+ 800001a:	f045 45aa 	orr.w	r5, r5, #1426063360	; 0x55000000
+	str r5, [r6]                // Store result in GPIOD MODER register
+ 800001e:	6035      	str	r5, [r6, #0]
+
+	//GPIOA ( button )
+	ldr r6, = GPIOA_MODER		// Load GPIOA MODER register to r6
+ 8000020:	4e5d      	ldr	r6, [pc, #372]	; (8000198 <Fin+0xc>)
+	ldr r5, [r6]				// Read its content to r5
+ 8000022:	6835      	ldr	r5, [r6, #0]
+	and r5, 0xFFFFFFFC			// Clear bits
+ 8000024:	f025 0503 	bic.w	r5, r5, #3
+	orr r5, 0x0000000C			//
+ 8000028:	f045 050c 	orr.w	r5, r5, #12
+	str r5, [r6]				// Store result in GPIOA MODER register
+ 800002c:	6035      	str	r5, [r6, #0]
+
+	//GPIOB ( Pin )
+	ldr r6, = GPIOB_MODER		// Load GPIOB MODER register to r6
+ 800002e:	4e5b      	ldr	r6, [pc, #364]	; (800019c <Fin+0x10>)
+	ldr r5, [r6]				// Read its content to r5
+ 8000030:	6835      	ldr	r5, [r6, #0]
+	and r5, 0xFFFFFFFE			// Cleart bits
+ 8000032:	f025 0501 	bic.w	r5, r5, #1
+	orr r5, 0x00000001			// Write 01 to bits 0 & 1
+ 8000036:	f045 0501 	orr.w	r5, r5, #1
+	str r5, [r6]				// Store result in GPIOB MODER register
+ 800003a:	6035      	str	r5, [r6, #0]
+
+0800003c <X0>:
+//	@@       START        @@ //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//@ Lights all LEDs for 1 sec at startup
+X0:								// LEDs ON
+	ldr r6, = GPIOD_ODR
+ 800003c:	4e58      	ldr	r6, [pc, #352]	; (80001a0 <Fin+0x14>)
+	ldr r5, [r6]
+ 800003e:	6835      	ldr	r5, [r6, #0]
+	orr r5, 0xF000
+ 8000040:	f445 4570 	orr.w	r5, r5, #61440	; 0xf000
+	str r5, [r6]
+ 8000044:	6035      	str	r5, [r6, #0]
+	ldr r7, =LEDDELAY
+ 8000046:	4f57      	ldr	r7, [pc, #348]	; (80001a4 <Fin+0x18>)
+
+08000048 <DELAY1>:
+
+DELAY1:							// Decides how long LEDs will be lit
+	cbz r7, Y0					// If r7's data is 0, goes to 'Y0'
+ 8000048:	b10f      	cbz	r7, 800004e <Y0>
+	subs r7, r7, #1				// Decreases r7 by 1 and writes to r7
+ 800004a:	3f01      	subs	r7, #1
+	b DELAY1					// Goes back to 'DELAY1'
+ 800004c:	e7fc      	b.n	8000048 <DELAY1>
+
+0800004e <Y0>:
+
+Y0:								// LEDs OFF
+	and r5, 0x000
+ 800004e:	f005 0500 	and.w	r5, r5, #0
+	str r5, [r6]
+ 8000052:	6035      	str	r5, [r6, #0]
+	ldr r7, =LEDDELAY
+ 8000054:	4f53      	ldr	r7, [pc, #332]	; (80001a4 <Fin+0x18>)
+
+08000056 <DELAY2>:
+
+DELAY2:
+	cbz r7, Prep				// If r7's data is 0, goes to 'Prep'
+ 8000056:	b10f      	cbz	r7, 800005c <Prep>
+	subs r7, r7, #1				// Decreases r7 by 1 and writes to r7
+ 8000058:	3f01      	subs	r7, #1
+	b DELAY2					// Goes back to 'DELAY2'
+ 800005a:	e7fc      	b.n	8000056 <DELAY2>
+
+0800005c <Prep>:
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+Prep:							// Constant values loaded to registers
+	ldr r2, =identifier
+ 800005c:	f04f 7280 	mov.w	r2, #16777216	; 0x1000000
+	ldr r3, =source_adr
+ 8000060:	f44f 23e0 	mov.w	r3, #458752	; 0x70000
+	ldr r4, =dest_adr
+ 8000064:	f44f 6420 	mov.w	r4, #2560	; 0xa00
+	and r1, 0x00				// Clearing r1 which will hold whole data frame
+ 8000068:	f001 0100 	and.w	r1, r1, #0
+
+	orr r5, r2, r3				// Combining r2 and r3's data
+ 800006c:	ea42 0503 	orr.w	r5, r2, r3
+	orr r1, r4, r5 			    // Data Frame packing, R1 -> identifier & source_adr & dest_adr & 00
+ 8000070:	ea44 0105 	orr.w	r1, r4, r5
+
+	ldr r10, =RC_start 			// RC initial value loaded from constant to r10
+ 8000074:	f04f 0a49 	mov.w	sl, #73	; 0x49
+	ldr r9, =mod_num			// mod 256's value loaded from constant to r9
+ 8000078:	f44f 7980 	mov.w	r9, #256	; 0x100
+
+0800007c <Button>:
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+Button: 						// Checks button press
+	and r5, 0x00 				// Clearing r5
+ 800007c:	f005 0500 	and.w	r5, r5, #0
+	and r6, 0x00 				// Clearing r6
+ 8000080:	f006 0600 	and.w	r6, r6, #0
+
+	ldr r6, =GPIOA_IDR
+ 8000084:	4e48      	ldr	r6, [pc, #288]	; (80001a8 <Fin+0x1c>)
+	ldr r5, [r6]
+ 8000086:	6835      	ldr	r5, [r6, #0]
+	and r5, 0x1					// Clears r5 except 0th bit for reading button press
+ 8000088:	f005 0501 	and.w	r5, r5, #1
+	cmp r5, #0					// r5's data compared with '0' bit
+ 800008c:	2d00      	cmp	r5, #0
+	beq Button					// if r5's data is equals to 0, go back to the 'Button'
+ 800008e:	d0f5      	beq.n	800007c <Button>
+
+08000090 <Rolling_Code>:
+
+Rolling_Code:					// Rolling code's mod process is done here
+	and r5, 0x00 				// Clearing r5
+ 8000090:	f005 0500 	and.w	r5, r5, #0
+	and r6, 0x00 				// Clearing r6
+ 8000094:	f006 0600 	and.w	r6, r6, #0
+
+	// --TAKING MOD 256 STARTS HERE-- //
+
+	udiv r5, r10, r9			// r10's data diveded by r9's data and result is written to r5
+ 8000098:	fbba f5f9 	udiv	r5, sl, r9
+	mul r6, r5, r9				// r5's data multiplied by r9's data and result is written to r6
+ 800009c:	fb05 f609 	mul.w	r6, r5, r9
+	subs r10, r10, r6 			// r6'^s data substracted from r10 and result written to r10
+ 80000a0:	ebba 0a06 	subs.w	sl, sl, r6
+								// r10 = ( (RC) mod256 )
+
+	// --TAKING MOD 256 ENDS HERE-- //
+
+	and r12, #0					// Clearing r12
+ 80000a4:	f00c 0c00 	and.w	ip, ip, #0
+	orr r12, r1					// Data Frame(r1) transferred to r12
+ 80000a8:	ea4c 0c01 	orr.w	ip, ip, r1
+	orr r12, r10 				// Data frame is packed, R12 -> identifier & source_adr & dest_adr & RC
+ 80000ac:	ea4c 0c0a 	orr.w	ip, ip, sl
+
+080000b0 <X>:
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+								// Lighs 2 LEDs(Orange & Blue) for 1 sec upon button press
+X: 								// LEDs ON
+	ldr r6, = GPIOD_ODR
+ 80000b0:	4e3b      	ldr	r6, [pc, #236]	; (80001a0 <Fin+0x14>)
+	ldr r5, [r6]
+ 80000b2:	6835      	ldr	r5, [r6, #0]
+	orr r5, 0xA000
+ 80000b4:	f445 4520 	orr.w	r5, r5, #40960	; 0xa000
+	str r5, [r6]
+ 80000b8:	6035      	str	r5, [r6, #0]
+	ldr r7, =LEDDELAY			// Calls LEDDELAY constant and loads it to r7
+ 80000ba:	4f3a      	ldr	r7, [pc, #232]	; (80001a4 <Fin+0x18>)
+
+080000bc <DELAY3>:
+
+DELAY3:							// Decides how long LEDs will be lit
+	cbz r7, Y					// If r7's data is 0, goes to 'Y'
+ 80000bc:	b10f      	cbz	r7, 80000c2 <Y>
+	subs r7, r7, #1				// Decreases r7 by 1 and writes to r7
+ 80000be:	3f01      	subs	r7, #1
+	b DELAY3					// Goes back to 'DELAY3'
+ 80000c0:	e7fc      	b.n	80000bc <DELAY3>
+
+080000c2 <Y>:
+
+Y: 								// LEDs OFF
+	and r5, 0x00
+ 80000c2:	f005 0500 	and.w	r5, r5, #0
+	str r5, [r6]
+ 80000c6:	6035      	str	r5, [r6, #0]
+	ldr r7, =LEDDELAY			// Calls LEDDELAY constant and loads it to r7
+ 80000c8:	4f36      	ldr	r7, [pc, #216]	; (80001a4 <Fin+0x18>)
+
+080000ca <DELAY4>:
+
+DELAY4:							// Decides how long system will be suspended
+	cbz r7, RC_LED				// If r7's data is 0, goes to 'RC_LED'
+ 80000ca:	b10f      	cbz	r7, 80000d0 <RC_LED>
+	subs r7, r7, #1				// Decreases r7 by 1 and writes to r7
+ 80000cc:	3f01      	subs	r7, #1
+	b DELAY4					// Goes back to 'DELAY4'
+ 80000ce:	e7fc      	b.n	80000ca <DELAY4>
+
+080000d0 <RC_LED>:
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+RC_LED:							// RC's last 4 bit is taken for displaying on LEDs
+	and r8, 0x00				// Clearing r8
+ 80000d0:	f008 0800 	and.w	r8, r8, #0
+	orr r8, r10 				// r10's data(RC) transferred to r8
+ 80000d4:	ea48 080a 	orr.w	r8, r8, sl
+	and r8, 0x0F				// Clearing r8 but not inclueding RC last 4 bits
+ 80000d8:	f008 080f 	and.w	r8, r8, #15
+	add r10, #1 				// r10's data(RC) increased by 1
+ 80000dc:	f10a 0a01 	add.w	sl, sl, #1
+	lsl r8, #12 				// r8's data shifted to left by 12 bits
+ 80000e0:	ea4f 3808 	mov.w	r8, r8, lsl #12
+
+080000e4 <X1>:
+
+X1:								// LEDs ON
+	ldr r6, =GPIOD_ODR
+ 80000e4:	4e2e      	ldr	r6, [pc, #184]	; (80001a0 <Fin+0x14>)
+	ldr r5, [r6]
+ 80000e6:	6835      	ldr	r5, [r6, #0]
+	orr r5, r8 					// Data input for LEDs (RC's last 4 bit is in r8)
+ 80000e8:	ea45 0508 	orr.w	r5, r5, r8
+	str r5, [r6]
+ 80000ec:	6035      	str	r5, [r6, #0]
+	ldr r7, =LEDDELAY			// Calls LEDDELAY constant and loads it to r7
+ 80000ee:	4f2d      	ldr	r7, [pc, #180]	; (80001a4 <Fin+0x18>)
+
+080000f0 <DELAY5>:
+
+DELAY5:							// Decides how long LEDs will be lit
+	cbz r7, Y1					// If r7's data is 0, goes to 'Y1'
+ 80000f0:	b10f      	cbz	r7, 80000f6 <Y1>
+	subs r7, r7, #1				// Decreases r7 by 1 and writes to r7
+ 80000f2:	3f01      	subs	r7, #1
+	b DELAY5					// Goes back to 'DELAY5'
+ 80000f4:	e7fc      	b.n	80000f0 <DELAY5>
+
+080000f6 <Y1>:
+
+Y1:								// LEDs OFF
+	and r5, 0x00
+ 80000f6:	f005 0500 	and.w	r5, r5, #0
+	str r5, [r6]
+ 80000fa:	6035      	str	r5, [r6, #0]
+	ldr r7, =LEDDELAY			// Calls LEDDELAY constant and loads it to r7
+ 80000fc:	4f29      	ldr	r7, [pc, #164]	; (80001a4 <Fin+0x18>)
+
+080000fe <Encrypt>:
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+Encrypt:						//Encryption of Data Frame is done in here
+	and r0, #0					// Clearing r0
+ 80000fe:	f000 0000 	and.w	r0, r0, #0
+	and r6, 0x00 				// Clearing r6
+ 8000102:	f006 0600 	and.w	r6, r6, #0
+	ldr r6, =Encrypt_Key		// Calls Encryption Key constant and loads it to r6
+ 8000106:	f04f 06c9 	mov.w	r6, #201	; 0xc9
+	eor r0, r12, r6 			// Data frame is XORed with hardcoded encryption key and written on r0
+ 800010a:	ea8c 0006 	eor.w	r0, ip, r6
+	movs r7, #32				// Decimal number 32 loaded to r7, this'll be bit counter in M.E.
+ 800010e:	2720      	movs	r7, #32
+
+08000110 <ME_Bit_Seperator>:
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+ME_Bit_Seperator:
+	cbz r7, Fin					// When counter reaches 0, all the data frame is sent
+ 8000110:	b3e7      	cbz	r7, 800018c <Fin>
+	and r11, r0, #1 			// All data is deleted except for 0th bit and it's written to r11
+ 8000112:	f000 0b01 	and.w	fp, r0, #1
+
+	cmp r11, #1					// Compares r11's data wit '1'
+ 8000116:	f1bb 0f01 	cmp.w	fp, #1
+	beq ME_one 					// Goes M.E. if 0th bit is 1
+ 800011a:	d000      	beq.n	800011e <ME_one>
+	bne ME_zero					// Goes M.E. if 0th bit is 0
+ 800011c:	d11a      	bne.n	8000154 <ME_zero>
+
+0800011e <ME_one>:
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+ME_one:
+	ldr r6, = GPIOB_ODR
+ 800011e:	4e23      	ldr	r6, [pc, #140]	; (80001ac <Fin+0x20>)
+	ldr r5, [r6]
+ 8000120:	6835      	ldr	r5, [r6, #0]
+	and r5, 0xFFFFFFFE
+ 8000122:	f025 0501 	bic.w	r5, r5, #1
+	orr r5, 0x01				// bit '1' (high) sent to PB0 pin
+ 8000126:	f045 0501 	orr.w	r5, r5, #1
+	str r5, [r6]
+ 800012a:	6035      	str	r5, [r6, #0]
+
+	ldr r6, =BITDELAY			// Calls BITDELAY constant and loads it to r6
+ 800012c:	f641 066a 	movw	r6, #6250	; 0x186a
+
+08000130 <DELAY6>:
+
+DELAY6:							// Decides how long bit will shown on pin
+	cbz r6, ME_one_2			// If r6's data is 0, goes to 'ME_one_2'
+ 8000130:	b10e      	cbz	r6, 8000136 <ME_one_2>
+	subs r6, r6, #1				// Decreases r6 by 1 and writes to r6
+ 8000132:	3e01      	subs	r6, #1
+	b DELAY6					// Goes back to 'DELAY6'
+ 8000134:	e7fc      	b.n	8000130 <DELAY6>
+
+08000136 <ME_one_2>:
+
+ME_one_2:
+	ldr r6, = GPIOB_ODR
+ 8000136:	4e1d      	ldr	r6, [pc, #116]	; (80001ac <Fin+0x20>)
+	ldr r5, [r6]
+ 8000138:	6835      	ldr	r5, [r6, #0]
+	and r5, 0xFFFFFFFE
+ 800013a:	f025 0501 	bic.w	r5, r5, #1
+	orr r5, 0x00				// bit '0' (high) sent to PB0 pin
+ 800013e:	f045 0500 	orr.w	r5, r5, #0
+	str r5, [r6]
+ 8000142:	6035      	str	r5, [r6, #0]
+
+	lsr r0, #1 					// Shifts Whole data frame to right by 1
+ 8000144:	ea4f 0050 	mov.w	r0, r0, lsr #1
+	subs r7, r7, #1				// Decreases bit counter by 1
+ 8000148:	3f01      	subs	r7, #1
+
+	ldr r6, =BITDELAY			// Calls BITDELAY constant and loads it to r6
+ 800014a:	f641 066a 	movw	r6, #6250	; 0x186a
+
+0800014e <DELAY7>:
+
+DELAY7:							// Decides how long bit will shown on pin
+	cbz r6, Bridge				// If r6's data is 0, goes to 'Bridge'
+ 800014e:	b1e6      	cbz	r6, 800018a <Bridge>
+	subs r6, r6, #1				// Decreases r6 by 1 and writes to r6
+ 8000150:	3e01      	subs	r6, #1
+	b DELAY7
+ 8000152:	e7fc      	b.n	800014e <DELAY7>
+
+08000154 <ME_zero>:
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+ME_zero:
+	ldr r6, = GPIOB_ODR
+ 8000154:	4e15      	ldr	r6, [pc, #84]	; (80001ac <Fin+0x20>)
+	ldr r5, [r6]
+ 8000156:	6835      	ldr	r5, [r6, #0]
+	and r5, 0xFFFFFFFE
+ 8000158:	f025 0501 	bic.w	r5, r5, #1
+	orr r5, 0x00				// bit '0' (low) sent to PB0 pin
+ 800015c:	f045 0500 	orr.w	r5, r5, #0
+	str r5, [r6]
+ 8000160:	6035      	str	r5, [r6, #0]
+
+	ldr r6, =BITDELAY			// Calls BITDELAY constant and loads it to r6
+ 8000162:	f641 066a 	movw	r6, #6250	; 0x186a
+
+08000166 <DELAY8>:
+
+DELAY8:							// Decides how long bit will shown on pin
+	cbz r6, ME_zero_2				// If r6's data is 0, goes to 'ME_zero_2'
+ 8000166:	b10e      	cbz	r6, 800016c <ME_zero_2>
+	subs r6, r6, #1				// Decreases r6 by 1 and writes to r6
+ 8000168:	3e01      	subs	r6, #1
+	b DELAY8					// Goes back to 'DELAY7'
+ 800016a:	e7fc      	b.n	8000166 <DELAY8>
+
+0800016c <ME_zero_2>:
+
+ME_zero_2:
+	ldr r6, = GPIOB_ODR
+ 800016c:	4e0f      	ldr	r6, [pc, #60]	; (80001ac <Fin+0x20>)
+	ldr r5, [r6]
+ 800016e:	6835      	ldr	r5, [r6, #0]
+	and r5, 0xFFFFFFFE
+ 8000170:	f025 0501 	bic.w	r5, r5, #1
+	orr r5, 0x01				// bit '1' (high) sent to PB0 pin
+ 8000174:	f045 0501 	orr.w	r5, r5, #1
+	str r5, [r6]
+ 8000178:	6035      	str	r5, [r6, #0]
+
+	lsr r0, #1 					// Shifts Whole data frame to right by 1
+ 800017a:	ea4f 0050 	mov.w	r0, r0, lsr #1
+	subs r7, r7, #1				// Decreases bit counter by 1
+ 800017e:	3f01      	subs	r7, #1
+
+	ldr r6, =BITDELAY			// Calls BITDELAY constant and loads it to r6
+ 8000180:	f641 066a 	movw	r6, #6250	; 0x186a
+
+08000184 <DELAY9>:
+
+DELAY9:							// Decides how long bit will shown on pin
+	cbz r6, Bridge				// If r6's data is 0, goes to 'Bridge'
+ 8000184:	b10e      	cbz	r6, 800018a <Bridge>
+	subs r6, r6, #1				// Decreases r6 by 1 and writes to r6
+ 8000186:	3e01      	subs	r6, #1
+	b DELAY9
+ 8000188:	e7fc      	b.n	8000184 <DELAY9>
+
+0800018a <Bridge>:
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+Bridge:
+	b ME_Bit_Seperator
+ 800018a:	e7c1      	b.n	8000110 <ME_Bit_Seperator>
+
+0800018c <Fin>:
+
+Fin:
+	b Button					// Job is done, go back to the 'Button'
+ 800018c:	e776      	b.n	800007c <Button>
+ 800018e:	0000      	.short	0x0000
+	ldr r6, = RCC_AHB1ENR       // Load peripheral clock reg address to r6
+ 8000190:	40023830 	.word	0x40023830
+	ldr r6, = GPIOD_MODER       // Load GPIOD MODER register address to r6
+ 8000194:	40020c00 	.word	0x40020c00
+	ldr r6, = GPIOA_MODER		// Load GPIOA MODER register to r6
+ 8000198:	40020000 	.word	0x40020000
+	ldr r6, = GPIOB_MODER		// Load GPIOB MODER register to r6
+ 800019c:	40020400 	.word	0x40020400
+	ldr r6, = GPIOD_ODR
+ 80001a0:	40020c14 	.word	0x40020c14
+	ldr r7, =LEDDELAY
+ 80001a4:	001e8480 	.word	0x001e8480
+	ldr r6, =GPIOA_IDR
+ 80001a8:	40020010 	.word	0x40020010
+	ldr r6, = GPIOB_ODR
+ 80001ac:	40020414 	.word	0x40020414

@@ -1,0 +1,4 @@
+systick.c:31:6:SysTick_Handler	4	static
+systick.c:42:6:init_systick	16	static
+systick.c:64:5:main	8	static
+systick.c:122:6:delay_ms	16	static

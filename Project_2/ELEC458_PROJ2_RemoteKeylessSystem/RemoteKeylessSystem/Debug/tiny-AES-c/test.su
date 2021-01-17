@@ -1,0 +1,10 @@
+test.c:24:5:main	24	static
+test.c:49:13:phex	24	static
+test.c:66:13:test_encrypt_ecb_verbose	296	static
+test.c:108:12:test_encrypt_ecb	256	static
+test.c:140:12:test_decrypt_cbc	368	static
+test.c:185:12:test_encrypt_cbc	368	static
+test.c:229:12:test_encrypt_ctr	8	static
+test.c:234:12:test_decrypt_ctr	8	static
+test.c:239:12:test_xcrypt_ctr	376	static
+test.c:284:12:test_decrypt_ecb	256	static

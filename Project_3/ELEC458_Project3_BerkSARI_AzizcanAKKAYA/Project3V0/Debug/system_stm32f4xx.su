@@ -1,0 +1,2 @@
+system_stm32f4xx.c:16:6:SystemInit	4	static
+system_stm32f4xx.c:48:6:set_sysclk_to_168	4	static

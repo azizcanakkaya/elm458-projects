@@ -1,0 +1,97 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+rom              0x0000000008000000 0x0000000000100000 xr
+ram              0x0000000020000000 0x0000000000020000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD template.o
+START GROUP
+LOAD d:/programlar/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m\libgcc.a
+LOAD d:/programlar/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc_nano.a
+END GROUP
+START GROUP
+LOAD d:/programlar/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m\libgcc.a
+LOAD d:/programlar/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc_nano.a
+LOAD d:/programlar/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libnosys.a
+END GROUP
+START GROUP
+LOAD d:/programlar/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m\libgcc.a
+LOAD d:/programlar/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc_nano.a
+LOAD d:/programlar/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libnosys.a
+END GROUP
+
+.text           0x0000000008000000      0x1b0
+ *(.vectors)
+ *(.text*)
+ .text          0x0000000008000000      0x1b0 template.o
+ *(.rodata*)
+                0x00000000080001b0                . = ALIGN (0x4)
+                0x00000000080001b0                __etext = .
+                0x00000000080001b0                _sidata = .
+
+.glue_7         0x0000000008000000        0x0
+ .glue_7        0x0000000008000000        0x0 linker stubs
+
+.glue_7t        0x0000000008000000        0x0
+ .glue_7t       0x0000000008000000        0x0 linker stubs
+
+.vfp11_veneer   0x0000000008000000        0x0
+ .vfp11_veneer  0x0000000008000000        0x0 linker stubs
+
+.v4_bx          0x0000000008000000        0x0
+ .v4_bx         0x0000000008000000        0x0 linker stubs
+
+.iplt           0x0000000008000000        0x0
+ .iplt          0x0000000008000000        0x0 template.o
+
+.rel.dyn        0x0000000008000000        0x0
+ .rel.iplt      0x0000000008000000        0x0 template.o
+
+.data           0x0000000020000000        0x0 load address 0x00000000080001b0
+                0x0000000020000000                __data_start__ = .
+ *(.data*)
+ .data          0x0000000020000000        0x0 template.o
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                __data_end__ = .
+
+.igot.plt       0x0000000020000000        0x0
+ .igot.plt      0x0000000020000000        0x0 template.o
+
+.bss            0x0000000020000000        0x0 load address 0x00000000080001b0
+                0x0000000020000000                __bss_start__ = .
+                0x0000000020000000                . = ALIGN (0x4)
+ *(.bss*)
+ .bss           0x0000000020000000        0x0 template.o
+ *(COMMON)
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                __bss_end__ = .
+                0x0000000020020000                __StackTop = (ORIGIN (ram) + LENGTH (ram))
+                0x00000000000001b0                __text_size = SIZEOF (.text)
+                0x0000000000000000                __data_size = SIZEOF (.data)
+                0x0000000000000000                __bss_size = SIZEOF (.bss)
+OUTPUT(f4-asm.elf elf32-littlearm)
+
+.ARM.attributes
+                0x0000000000000000       0x21
+ .ARM.attributes
+                0x0000000000000000       0x21 template.o
+
+.debug_line     0x0000000000000000       0xdb
+ .debug_line    0x0000000000000000       0xdb template.o
+
+.debug_info     0x0000000000000000       0x26
+ .debug_info    0x0000000000000000       0x26 template.o
+
+.debug_abbrev   0x0000000000000000       0x14
+ .debug_abbrev  0x0000000000000000       0x14 template.o
+
+.debug_aranges  0x0000000000000000       0x20
+ .debug_aranges
+                0x0000000000000000       0x20 template.o
+
+.debug_str      0x0000000000000000       0x91
+ .debug_str     0x0000000000000000       0x91 template.o

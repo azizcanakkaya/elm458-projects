@@ -1,0 +1,16 @@
+core_cm4.h:1684:22:__NVIC_EnableIRQ	16	static,ignoring_inline_asm
+main.c:63:9:TIM2_IRQHandler	4	static
+main.c:74:6:EXTI0_IRQHandler	16	static
+main.c:100:6:SysTick_Handler	224	static,ignoring_inline_asm
+main.c:230:6:USART2_IRQHandler	8	static
+main.c:250:6:USART3_IRQHandler	16	static
+main.c:279:6:init_systick	16	static
+main.c:302:6:unlock_flash	4	static
+main.c:307:6:lock_flash	4	static
+main.c:311:6:erase_flash_sector3	16	static,ignoring_inline_asm
+main.c:322:6:write_flash	16	static
+main.c:331:6:read_flash	24	static
+main.c:344:5:main	16	static,ignoring_inline_asm
+main.c:484:6:delay_ms	16	static
+main.c:492:6:Decryption_rx	208	static
+main.c:507:6:CommandLEDs	16	static
