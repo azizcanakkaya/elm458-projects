@@ -8,7 +8,7 @@ Examples for using Cortex-M4 based stm32f4 processor. All the examples are made
 for Nucleo STM32F407VG board. The pinouts and all the alternative functionality of 
 the board is given in the Figure below.
 
-![nucleo g031k8]()
+![STM32F407VG](/img/board.jpg)
 
 ## Documents
 
